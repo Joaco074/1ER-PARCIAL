@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Libros Disponibles</title>
+</head>
+<body>
+    <h1>Libros Disponibles</h1>
+
+    <form method="POST" action="/buscar">
+        <input type="text" name="termino_de_busqueda" placeholder="Buscar libros">
+        <button type="submit">Buscar</button>
+    </form>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Título</th>
+                <th>Autor</th>
+                <th>Precio</th>
+                <th>Stock</th>
+                <th>Acción</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for libro in libros %}
+            <tr>
+                <td>{{ libro.titulo }}</td>
+                <td>{{ libro.autor }}</td>
+                <td>${{ libro.precio }}</td>
+                <td>{{ libro.stock }}</td>
+                <td>
+                    <form method="POST" action="/comprar/{{ libro.id }}">
+                        <button type="submit" {% if libro.stock == 0 %}disabled{% endif %}>
+                            Comprar
+                        </button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
